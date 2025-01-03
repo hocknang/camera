@@ -13,5 +13,9 @@ def print_hi(name):
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
     st.title("Real-Time Barcode Scanner")
+    qr_code = qrcode_scanner(key='qrcode_scanner')
+
+    if qr_code:
+        st.write(qr_code)
 
 # See PyCharm help at https://www.jetbrains.com/help/pycharm/
