@@ -16,4 +16,5 @@ if __name__ == '__main__':
 
     if st.button("Click Me"):
         st.write("Hello, World!")
+        camera = st.camera_input("Capture an image")
 # See PyCharm help at https://www.jetbrains.com/help/pycharm/
