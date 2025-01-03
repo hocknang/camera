@@ -18,7 +18,7 @@ if __name__ == '__main__':
         st.write("Hello, World!")
         camera = st.camera_input("Capture an image")
 
-        if camera:
-            st.write("Capture Image")
-            st.image(camera, caption="Captured Image", use_column_width=True)
+        if camera is None:
+            st.write("Nice")
+
 # See PyCharm help at https://www.jetbrains.com/help/pycharm/
