@@ -4,6 +4,7 @@
 # Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
 import streamlit as st
 import zxing
+import cv2
 
 def print_hi(name):
     # Use a breakpoint in the code line below to debug your script.
