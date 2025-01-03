@@ -4,6 +4,8 @@
 # Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
 
 import streamlit as st
+import cv2
+import numpy as np
 
 def print_hi(name):
     # Use a breakpoint in the code line below to debug your script.
@@ -17,4 +19,13 @@ if __name__ == '__main__':
     if st.button("Click Me"):
         st.write("Hello, World!")
         camera = st.camera_input("Capture an image")
+
+        if camera:
+            # Decode the image captured by Streamlit
+            image_bytes = camera.getvalue()
+            nparr = np.frombuffer(image_bytes, np.uint8)
+            img = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
+
+            # Display the captured image
+            st.image(img, caption="Captured Image", channels="BGR")
 # See PyCharm help at https://www.jetbrains.com/help/pycharm/
