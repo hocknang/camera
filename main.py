@@ -18,7 +18,7 @@ if __name__ == '__main__':
     cap = cv2.VideoCapture(0)  # 0 is the default camera
 
     if not cap.isOpened():
-        print("Cannot access the camera!")
+        st.write("Cannot access the camera!")
         exit()
 
     while True:
