@@ -15,16 +15,24 @@ def print_hi(name):
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
     st.title("Real-Time Barcode Scanner")
-    cap = cv2.VideoCapture(0)  # 0 is the default camera
+    cap = cv2.VideoCapture(0)
 
     if not cap.isOpened():
-        st.write("Cannot access the camera!")
-        exit()
+        st.write("Error: Camera could not be opened. Checking camera devices...")
 
-    while True:
-        ret, frame = cap.read()  # Read a frame from the webcam
-        if not ret:
-            break
+        # Try different indices (1, 2, etc.) to open the camera
+        for index in range(3):  # Check the first 3 camera indices
+            cap = cv2.VideoCapture(index)
+            if cap.isOpened():
+                st.write(f"Success: Camera opened with index {index}")
+                break
+        else:
+            st.write("Error: No camera found or accessible.")
+    else:
+        st.write("Success: Camera opened with index 0")
+
+    # Release the camera if it was opened successfully
+    cap.release()
 
 
 # See PyCharm help at https://www.jetbrains.com/help/pycharm/
