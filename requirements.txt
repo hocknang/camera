@@ -1,2 +1,2 @@
+streamlit-qrcode-scanner
 streamlit
-streamlit_qrcode_scanner
