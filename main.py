@@ -21,11 +21,6 @@ if __name__ == '__main__':
         camera = st.camera_input("Capture an image")
 
         if camera:
-            # Decode the image captured by Streamlit
-            image_bytes = camera.getvalue()
-            nparr = np.frombuffer(image_bytes, np.uint8)
-            img = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
-
-            # Display the captured image
-            st.image(img, caption="Captured Image", channels="BGR")
+            st.write("Capture Image")
+            st.image(camera, caption="Captured Image", use_column_width=True)
 # See PyCharm help at https://www.jetbrains.com/help/pycharm/
