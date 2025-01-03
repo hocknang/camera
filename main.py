@@ -3,9 +3,8 @@
 # Press Shift+F10 to execute it or replace it with your code.
 # Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
 import streamlit as st
-from streamlit_webrtc import webrtc_streamer, VideoTransformerBase
-import av
-import cv2
+import base64
+from io import BytesIO
 
 def print_hi(name):
     # Use a breakpoint in the code line below to debug your script.
@@ -16,28 +15,48 @@ def print_hi(name):
 if __name__ == '__main__':
     st.title("Streamlit WebRTC Image Capture")
 
+    html_code = """
+        <html>
+        <body>
+            <h1>Capture an Image</h1>
+            <video id="video" width="640" height="480" autoplay></video>
+            <button id="capture">Capture</button>
+            <canvas id="canvas" width="640" height="480" style="display:none;"></canvas>
+            <script>
+                const video = document.getElementById('video');
+                const canvas = document.getElementById('canvas');
+                const captureButton = document.getElementById('capture');
+                const context = canvas.getContext('2d');
 
-    class VideoTransformer(VideoTransformerBase):
-        def transform(self, frame):
-            # Convert frame to ndarray for processing
-            img = frame.to_ndarray(format="bgr24")
+                // Access webcam
+                navigator.mediaDevices.getUserMedia({ video: true })
+                    .then((stream) => {
+                        video.srcObject = stream;
+                    })
+                    .catch((err) => {
+                        console.log("Error accessing webcam: " + err);
+                    });
 
-            # Optional: Apply custom image processing (e.g., sharpen, grayscale)
-            # Here, we'll just display the original frame
-            return av.VideoFrame.from_ndarray(img, format="bgr24")
+                // Capture image on button click
+                captureButton.onclick = function() {
+                    context.drawImage(video, 0, 0, canvas.width, canvas.height);
+                    const dataUrl = canvas.toDataURL('image/png');
+                    window.parent.postMessage(dataUrl, '*');
+                };
+            </script>
+        </body>
+        </html>
+    """
 
+    # Display the HTML and capture the image
+    st.components.v1.html(html_code, height=600)
 
-    # Start WebRTC streamer
-    ctx = webrtc_streamer(key="example", video_transformer_factory=VideoTransformer)
-
-    # Button to take a snapshot
-    if ctx.video_transformer:
-        if st.button("Capture Image"):
-            frame = ctx.video_transformer.last_frame
-            if frame is not None:
-                st.image(frame, channels="BGR", caption="Captured Image")
-            else:
-                st.warning("No frame available to capture!")
+    # Wait for a captured image and display it
+    image_data = st.experimental_get_query_params().get("image", [None])[0]
+    if image_data:
+        # Convert the image from base64 string to image
+        img = BytesIO(base64.b64decode(image_data.split(",")[1]))
+        st.image(img, caption="Captured Image", use_column_width=True)
 
 
 # See PyCharm help at https://www.jetbrains.com/help/pycharm/
