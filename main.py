@@ -21,6 +21,6 @@ if __name__ == '__main__':
         if camera:
             st.image(camera, caption="Captured Image")
         else:
-            st.warning("No image captured yet.")
+            st.write("No image captured yet.")
 
 # See PyCharm help at https://www.jetbrains.com/help/pycharm/
