@@ -1,4 +1,2 @@
+streamlit-qrcode-scanner
 streamlit
-opencv-python-headless
-numpy
-streamlit_webrtc
