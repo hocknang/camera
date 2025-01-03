@@ -18,7 +18,7 @@ if __name__ == '__main__':
     html_code = """
         <html>
         <body>
-            <h1>Capture an Image</h1>
+            <h1>Capture Image Using Your Phone Camera</h1>
             <video id="video" width="640" height="480" autoplay></video>
             <button id="capture">Capture</button>
             <canvas id="canvas" width="640" height="480" style="display:none;"></canvas>
@@ -28,7 +28,7 @@ if __name__ == '__main__':
                 const captureButton = document.getElementById('capture');
                 const context = canvas.getContext('2d');
 
-                // Access webcam
+                // Access the phone's camera
                 navigator.mediaDevices.getUserMedia({ video: true })
                     .then((stream) => {
                         video.srcObject = stream;
@@ -48,15 +48,14 @@ if __name__ == '__main__':
         </html>
     """
 
-    # Display the HTML and capture the image
+    # Embed the HTML into Streamlit
     st.components.v1.html(html_code, height=600)
 
-    # Wait for a captured image and display it
-    image_data = st.query_params.get("image", [None])[0]
+    # Handle image data passed from JavaScript
+    image_data = st.experimental_get_query_params().get("image", [None])[0]
     if image_data:
-        # Convert the image from base64 string to image
+        # Decode base64 data and display the image
         img = BytesIO(base64.b64decode(image_data.split(",")[1]))
         st.image(img, caption="Captured Image", use_column_width=True)
-
 
 # See PyCharm help at https://www.jetbrains.com/help/pycharm/
