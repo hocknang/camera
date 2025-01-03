@@ -14,4 +14,6 @@ def print_hi(name):
 if __name__ == '__main__':
     st.title("Camera Capture and Upload")
 
+    if st.button("Click Me"):
+        st.write("Hello, World!")
 # See PyCharm help at https://www.jetbrains.com/help/pycharm/
