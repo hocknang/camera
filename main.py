@@ -16,12 +16,12 @@ def print_hi(name):
 if __name__ == '__main__':
     st.title("Camera Capture and Upload")
 
-    # Enable camera
-    camera = st.camera_input("Capture an image")
+    enable = st.checkbox("Enable camera")
+    picture = st.camera_input("Take a picture", disabled=not enable)
 
-    if camera:
+    if picture:
         # Decode the image captured by Streamlit
-        image_bytes = camera.getvalue()
+        image_bytes = picture.getvalue()
         nparr = np.frombuffer(image_bytes, np.uint8)
         img = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
 
