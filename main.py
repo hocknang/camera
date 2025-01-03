@@ -16,8 +16,17 @@ def print_hi(name):
 if __name__ == '__main__':
     st.title("Camera Capture and Upload")
 
-    st.write(cv2.__version__)
+    # Enable camera
+    camera = st.camera_input("Capture an image")
 
+    if camera:
+        # Decode the image captured by Streamlit
+        image_bytes = camera.getvalue()
+        nparr = np.frombuffer(image_bytes, np.uint8)
+        img = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
+
+        # Display the captured image
+        st.image(img, caption="Captured Image", channels="BGR")
 
 
 # See PyCharm help at https://www.jetbrains.com/help/pycharm/
