@@ -17,22 +17,21 @@ if __name__ == '__main__':
     st.title("Real-Time Barcode Scanner")
     cap = cv2.VideoCapture(0)
 
-    if not cap.isOpened():
-        st.write("Error: Camera could not be opened. Checking camera devices...")
+    # Set camera resolution to a higher value
+    cap.set(cv2.CAP_PROP_FRAME_WIDTH, 1280)  # Width = 1280 pixels
+    cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 720)  # Height = 720 pixels
 
-        # Try different indices (1, 2, etc.) to open the camera
-        for index in range(3):  # Check the first 3 camera indices
-            cap = cv2.VideoCapture(index)
-            if cap.isOpened():
-                st.write(f"Success: Camera opened with index {index}")
-                break
-        else:
-            st.write("Error: No camera found or accessible.")
+    # Capture a frame from the camera
+    ret, frame = cap.read()
+
+    if not ret:
+        st.write("Error: No camera detected or accessible.")
     else:
-        st.write("Success: Camera opened with index 0")
+        # Process the frame for barcode detection
+        frame, barcode_info = detect_barcode(frame)
 
-    # Release the camera if it was opened successfully
-    cap.release()
+        # Display the captured frame in Streamlit
+        st.image(frame, caption="Captured Frame", channels="BGR", use_column_width=True)
 
 
 # See PyCharm help at https://www.jetbrains.com/help/pycharm/
