@@ -1,4 +1,2 @@
 streamlit
-opencv-python-headless
-zxing
-pyzbar
+streamlit_qrcode_scanner
