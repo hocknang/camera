@@ -56,7 +56,7 @@ if __name__ == '__main__':
     st.components.v1.html(html_code, height=600)
 
     # Fetch the image data from query parameters
-    image_data = st.experimental_get_query_params().get("image", [None])[0]
+    image_data = st.query_params.get("image", [None])[0]
 
     if image_data:
         # Decode base64 data and display the image
