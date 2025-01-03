@@ -4,6 +4,7 @@
 # Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
 
 import streamlit as st
+import cv2
 
 def print_hi(name):
     # Use a breakpoint in the code line below to debug your script.
@@ -14,6 +15,6 @@ def print_hi(name):
 if __name__ == '__main__':
     st.title("Camera Capture and Upload")
 
-    
+
 
 # See PyCharm help at https://www.jetbrains.com/help/pycharm/
