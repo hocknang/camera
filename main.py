@@ -41,7 +41,11 @@ if __name__ == '__main__':
                 captureButton.onclick = function() {
                     context.drawImage(video, 0, 0, canvas.width, canvas.height);
                     const dataUrl = canvas.toDataURL('image/png');
-                    window.parent.postMessage(dataUrl, '*');
+
+                    // Send image data back to Streamlit using URL query params
+                    const params = new URLSearchParams(window.location.search);
+                    params.set('image', dataUrl);
+                    window.history.replaceState(null, '', '?' + params.toString());
                 };
             </script>
         </body>
@@ -51,11 +55,14 @@ if __name__ == '__main__':
     # Embed the HTML into Streamlit
     st.components.v1.html(html_code, height=600)
 
-    # Handle image data passed from JavaScript
+    # Fetch the image data from query parameters
     image_data = st.experimental_get_query_params().get("image", [None])[0]
+
     if image_data:
         # Decode base64 data and display the image
         img = BytesIO(base64.b64decode(image_data.split(",")[1]))
         st.image(img, caption="Captured Image", use_column_width=True)
+    else:
+        st.write("No image captured yet.")
 
 # See PyCharm help at https://www.jetbrains.com/help/pycharm/
