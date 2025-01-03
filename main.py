@@ -14,13 +14,10 @@ def print_hi(name):
 if __name__ == '__main__':
     st.title("Camera Capture and Upload")
 
-    if st.button("Click Me"):
-        st.write("Hello, World!")
-        camera = st.camera_input("Capture an image")
+    enable = st.checkbox("Enable camera")
+    picture = st.camera_input("Take a picture", disabled=not enable)
 
-        if camera:
-            st.image(camera, caption="Captured Image")
-        else:
-            st.write("No image captured yet.")
+    if picture:
+        st.image(picture)
 
 # See PyCharm help at https://www.jetbrains.com/help/pycharm/
