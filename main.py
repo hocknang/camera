@@ -52,7 +52,7 @@ if __name__ == '__main__':
     st.components.v1.html(html_code, height=600)
 
     # Wait for a captured image and display it
-    image_data = st.experimental_get_query_params().get("image", [None])[0]
+    image_data = st.query_params.get("image", [None])[0]
     if image_data:
         # Convert the image from base64 string to image
         img = BytesIO(base64.b64decode(image_data.split(",")[1]))
