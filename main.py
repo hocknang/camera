@@ -54,6 +54,8 @@ if __name__ == '__main__':
                     let html5QrCode = null;
                     let isScanning = false; 
                     
+                    const config = { fps: 20, qrbox: { width: 250, height: 250 } };
+                    
                     // Fetch available cameras
                     Html5Qrcode.getCameras().then(devices => {
                         if (devices && devices.length) {
@@ -88,11 +90,20 @@ if __name__ == '__main__':
                             isScanning = false;
                         }else{
                          
-                            isScanning = true;
+                                isScanning = true;
                             
                                 const qrCodeSuccessCallback = (decodedText, decodedResult) => {
                                 console.log(`Code matched = ${decodedText}`, decodedResult);
                                 resultContainer.innerHTML = `Scanned Code: ${decodedText}`;
+                                
+                                html5QrCode.start(
+                                    selectedCameraId,
+                                    config,
+                                    qrCodeSuccessCallback
+                                ).catch(err => {
+                                    console.error(`Error starting scanner: ${err}`);
+                                    resultContainer.innerHTML = "Error starting scanner. Please try again.";
+                                w});
                             };
                         }
                     });
