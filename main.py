@@ -14,7 +14,7 @@ if __name__ == '__main__':
     st.title("Barcode Scanner with Streamlit")
 
     # HTML and JavaScript code
-        html_code = """
+    html_code = """
         <!DOCTYPE html>
         <html>
         <head>
