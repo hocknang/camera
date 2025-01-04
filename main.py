@@ -25,6 +25,8 @@ if __name__ == '__main__':
             <select id="camera-select"></select>
             <button id="start-scanner" disabled>Start Scanner</button>
         </div>
+        <div id="qr-reader"></div>
+        <div id="qr-reader-results">Scanned Code will appear here.</div>
     </body>
     </html>
     """
