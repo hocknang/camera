@@ -18,6 +18,25 @@ if __name__ == '__main__':
     <!DOCTYPE html>
     <html>
     <head>
+        <title>Barcode Scanner</title>
+        <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
+        <style>
+            #qr-reader {
+            width: 500px;
+            margin: 20px auto;
+        }
+        #controls {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        #qr-reader-results {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 18px;
+        }
+    </style>
     </head>
     <body>
         <h1 style="text-align: center;">Barcode Scanner</h1>
