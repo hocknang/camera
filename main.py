@@ -11,6 +11,10 @@ def print_hi(name):
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
-    st.title("Camera Capture and Upload")
+    enable = st.checkbox("Enable camera")
+    picture = st.camera_input("Take a picture", disabled=not enable)
+
+    if picture:
+        st.image(picture)
 
 # See PyCharm help at https://www.jetbrains.com/help/pycharm/
