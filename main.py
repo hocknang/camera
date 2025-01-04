@@ -53,6 +53,7 @@ if __name__ == '__main__':
                     const resultContainer = document.getElementById("qr-reader-results");
                     let html5QrCode = null;
                     
+                    // Fetch available cameras
                     Html5Qrcode.getCameras().then(devices => {
                         if (devices && devices.length) {
                             devices.forEach(device => {
@@ -70,6 +71,8 @@ if __name__ == '__main__':
                         console.error("Error getting cameras:", err);
                         resultContainer.innerHTML = "Error accessing cameras. Please check permissions.";
                     });
+                    
+                    
                 });
             </script>
         </body>
