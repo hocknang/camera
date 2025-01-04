@@ -75,6 +75,10 @@ if __name__ == '__main__':
                     
                     startButton.addEventListener("click", () => {
                         const selectedCameraId = cameraSelect.value;
+                        
+                         if (isScanning) {
+                         }else{
+                         }
                     });
                     
                 });
