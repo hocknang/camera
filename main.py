@@ -73,7 +73,7 @@ if __name__ == '__main__':
                     });
                     
                     startButton.addEventListener("click", () => {
-                        alert("hello world")
+                        const selectedCameraId = cameraSelect.value;
                     });
                     
                 });
