@@ -47,6 +47,8 @@ if __name__ == '__main__':
         <div id="qr-reader"></div>
         <div id="qr-reader-results">Scanned Code will appear here.</div>
         <script>
+            document.addEventListener("DOMContentLoaded", () => {
+            });
         </script>
     </body>
     </html>
