@@ -89,6 +89,11 @@ if __name__ == '__main__':
                         }else{
                          
                             isScanning = true;
+                            
+                                const qrCodeSuccessCallback = (decodedText, decodedResult) => {
+                                console.log(`Code matched = ${decodedText}`, decodedResult);
+                                resultContainer.innerHTML = `Scanned Code: ${decodedText}`;
+                            };
                         }
                     });
                     
