@@ -88,9 +88,11 @@ if __name__ == '__main__':
                         if (isScanning) {
                             
                             isScanning = false;
+                            startButton.textContent = "Start Scanner";
                         }else{
                          
                                 isScanning = true;
+                                startButton.textContent = "Stop Scanner";
                             
                                 const qrCodeSuccessCallback = (decodedText, decodedResult) => {
                                 console.log(`Code matched = ${decodedText}`, decodedResult);
