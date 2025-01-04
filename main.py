@@ -21,6 +21,10 @@ if __name__ == '__main__':
     </head>
     <body>
         <h1 style="text-align: center;">Barcode Scanner</h1>
+        <div id="controls">
+            <select id="camera-select"></select>
+            <button id="start-scanner" disabled>Start Scanner</button>
+        </div>
     </body>
     </html>
     """
