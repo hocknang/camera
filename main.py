@@ -87,6 +87,13 @@ if __name__ == '__main__':
                         if(isScanning){
                             isScanning = false;
                             startButton.textContent = "Start Scanner";
+                            html5QrCode.stop().then(ignore => {
+                                // QR Code scanning is stopped.
+                            }).catch(err => {
+                                // Stop failed, handle it.
+                                console.error(`Error starting scanner: ${err}`);
+                                resultContainer.innerHTML = "Error starting scanner (Off). Please try again.";
+                            });
                         }else{
                             isScanning = true;
                             startButton.textContent = "Stop Scanner";
@@ -97,7 +104,7 @@ if __name__ == '__main__':
                                 qrCodeSuccessCallback
                             ).catch(err => {
                                 console.error(`Error starting scanner: ${err}`);
-                                resultContainer.innerHTML = "Error starting scanner. Please try again.";
+                                resultContainer.innerHTML = "Error starting scanner (On) Please try again.";
                             });
                         }
                         
