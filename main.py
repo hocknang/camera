@@ -54,27 +54,32 @@ if __name__ == '__main__':
                     let html5QrCode = new Html5Qrcode("qr-reader");
                     let isScanning = false; 
                     
-                    const config = { fps: 15, qrbox: { width: 250, height: 250 } };
-                    
-                    // Fetch available cameras
-                    Html5Qrcode.getCameras().then(devices => {
-                        if (devices && devices.length) {
+                    // Request camera access
+                    navigator.mediaDevices.getUserMedia({ video: true })
+                        .then(() => {
+                             Html5Qrcode.getCameras().then(devices => {
+                            if (devices && devices.length) {
                             devices.forEach(device => {
-                            const option = document.createElement("option");
-                            option.value = device.id;
-                            option.text = device.label || `Camera ${cameraSelect.length + 1}`;
-                            cameraSelect.appendChild(option);
-                         });
-    
-                            startButton.disabled = false; // Enable the start button
-                        } else {
-                            resultContainer.innerHTML = "No cameras found!";
-                            startButton.disabled = true;
-                        }
-                    }).catch(err => {
+                                const option = document.createElement("option");
+                                option.value = device.id;
+                                option.text = device.label || `Camera ${cameraSelect.length + 1}`;
+                                cameraSelect.appendChild(option);
+                            });
+                                startButton.disabled = false;
+                            } else {
+                                resultContainer.innerHTML = "No cameras found!";
+                            }
+                        }).catch(err => {
                         console.error("Error getting cameras:", err);
-                        resultContainer.innerHTML = "Error accessing cameras. Please check permissions.";
+                        resultContainer.innerHTML = "Error accessing cameras.";
                     });
+                })
+                .catch(err => {
+                    console.error("Camera permission denied:", err);
+                    alert("Please allow camera access in browser settings.");
+                });
+                    
+                    const config = { fps: 15, qrbox: { width: 250, height: 250 } };
                     
                     startButton.addEventListener("click", () => {
                         const selectedCameraId = cameraSelect.value;
