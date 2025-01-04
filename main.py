@@ -90,6 +90,15 @@ if __name__ == '__main__':
                         }else{
                             isScanning = true;
                             startButton.textContent = "Stop Scanner";
+                            
+                            html5QrCode.start(
+                                selectedCameraId,
+                                config,
+                                qrCodeSuccessCallback
+                            ).catch(err => {
+                                console.error(`Error starting scanner: ${err}`);
+                                resultContainer.innerHTML = "Error starting scanner. Please try again.";
+                            });
                         }
                         
                     });
