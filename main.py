@@ -54,7 +54,7 @@ if __name__ == '__main__':
                     let html5QrCode = new Html5Qrcode("qr-reader");
                     let isScanning = false; 
                     
-                    const config = { fps: 20, qrbox: { width: 250, height: 250 } };
+                    const config = { fps: 15, qrbox: { width: 250, height: 250 } };
                     
                     // Fetch available cameras
                     Html5Qrcode.getCameras().then(devices => {
