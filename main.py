@@ -52,6 +52,7 @@ if __name__ == '__main__':
                     const startButton = document.getElementById("start-scanner");
                     const resultContainer = document.getElementById("qr-reader-results");
                     let html5QrCode = null;
+                    let isScanning = false; 
                     
                     // Fetch available cameras
                     Html5Qrcode.getCameras().then(devices => {
