@@ -48,6 +48,10 @@ if __name__ == '__main__':
         <div id="qr-reader-results">Scanned Code will appear here.</div>
         <script>
             document.addEventListener("DOMContentLoaded", () => {
+                const cameraSelect = document.getElementById("camera-select");
+                const startButton = document.getElementById("start-scanner");
+                const resultContainer = document.getElementById("qr-reader-results");
+                let html5QrCode = null;
             });
         </script>
     </body>
