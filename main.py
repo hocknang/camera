@@ -67,6 +67,7 @@ if __name__ == '__main__':
                             startButton.disabled = false; // Enable the start button
                         } else {
                             resultContainer.innerHTML = "No cameras found!";
+                            startButton.disabled = true;
                         }
                     }).catch(err => {
                         console.error("Error getting cameras:", err);
