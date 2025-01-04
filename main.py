@@ -81,14 +81,15 @@ if __name__ == '__main__':
                             html5QrCode.stop().catch(err => console.error("Error stopping scanner:", err));
                         }
                         
-                         if (isScanning) {
+                        html5QrCode = new Html5Qrcode("qr-reader");
+                        
+                        if (isScanning) {
                             
                             isScanning = false;
-                         }else{
+                        }else
                          
                             isScanning = true;
-                         
-                         }
+                        }
                     });
                     
                 });
