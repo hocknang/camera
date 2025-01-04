@@ -77,7 +77,7 @@ if __name__ == '__main__':
                     startButton.addEventListener("click", () => {
                         const selectedCameraId = cameraSelect.value;
                         
-                        if (html5QrCode == null) {
+                        if (html5QrCode) {
                             html5QrCode.stop().catch(err => console.error("Error stopping scanner:", err));
                         }
                         
