@@ -79,6 +79,19 @@ if __name__ == '__main__':
                     startButton.addEventListener("click", () => {
                         const selectedCameraId = cameraSelect.value;
                         
+                        const qrCodeSuccessCallback = (decodedText, decodedResult) => {
+                            console.log(`Code matched = ${decodedText}`, decodedResult);
+                            resultContainer.innerHTML = `Scanned Code: ${decodedText}`;
+                        };
+                        
+                        if(isScanning){
+                            isScanning = false;
+                            startButton.textContent = "Start Scanner";
+                        }else{
+                            isScanning = true;
+                            startButton.textContent = "Stop Scanner";
+                        }
+                        
                     });
                     
                 });
