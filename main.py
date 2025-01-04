@@ -72,6 +72,8 @@ if __name__ == '__main__':
                         resultContainer.innerHTML = "Error accessing cameras. Please check permissions.";
                     });
                     
+                    startButton.addEventListener("click", () => {
+                    });
                     
                 });
             </script>
