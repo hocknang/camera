@@ -51,7 +51,7 @@ if __name__ == '__main__':
                     const cameraSelect = document.getElementById("camera-select");
                     const startButton = document.getElementById("start-scanner");
                     const resultContainer = document.getElementById("qr-reader-results");
-                    let html5QrCode = null;
+                    let html5QrCode = new Html5Qrcode("qr-reader");
                     let isScanning = false; 
                     
                     const config = { fps: 20, qrbox: { width: 250, height: 250 } };
@@ -78,24 +78,6 @@ if __name__ == '__main__':
                     
                     startButton.addEventListener("click", () => {
                         const selectedCameraId = cameraSelect.value;
-                        
-                        if (html5QrCode) {
-                            html5QrCode.stop().catch(err => console.error("Error stopping scanner:", err));
-                        }
-                        
-                        html5QrCode = new Html5Qrcode("qr-reader");
-                        
-                        startButton.addEventListener("click", () => {
-                            
-                            if(isScanning){
-                                isScanning = false;
-                                startButton.textContent = "Start Scanner";
-                            }else{
-                                isScanning = true;
-                                startButton.textContent = "Stop Scanner";
-                            }
-                        
-                        });
                         
                     });
                     
