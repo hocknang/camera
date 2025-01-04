@@ -82,7 +82,12 @@ if __name__ == '__main__':
                         }
                         
                          if (isScanning) {
+                            
+                            isScanning = false;
                          }else{
+                         
+                            isScanning = true;
+                         
                          }
                     });
                     
