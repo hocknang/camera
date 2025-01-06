@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".StockTakeReport">
+
+    <!--Stock Report-->
+    <Button
+        android:id="@+id/btnURLSendAllReport"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:background="?android:attr/selectableItemBackground"
+        android:text="@string/SendAllReport"
+        android:textColor="#000000"
+        android:textColorLink="#000000"
+        android:textSize="18dp"
+        app:layout_constraintBottom_toTopOf="@+id/btnURLMaster"
+        app:layout_constraintTop_toTopOf="parent"></Button>
+
+    <Button
+        android:id="@+id/btnURLMaster"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:background="?android:attr/selectableItemBackground"
+        android:text="@string/urlStockTakeMaster"
+        android:textColor="#000000"
+        android:textColorLink="#000000"
+        android:textSize="18dp"
+        app:layout_constraintBottom_toTopOf="@+id/btnURLAudit"
+        app:layout_constraintTop_toBottomOf="@+id/btnURLSendAllReport"></Button>
+
+    <Button
+        android:id="@+id/btnURLAudit"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:background="?android:attr/selectableItemBackground"
+        android:text="@string/urlStockTakeAudit"
+        android:textColor="#000000"
+        android:textColorLink="#000000"
+        android:textSize="18dp"
+        app:layout_constraintBottom_toTopOf="@+id/btnURLUntracked"
+        app:layout_constraintTop_toBottomOf="@+id/btnURLMaster"></Button>
+
+    <Button
+        android:id="@+id/btnURLUntracked"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:background="?android:attr/selectableItemBackground"
+        android:text="@string/urlStockTakeUntracked"
+        android:textColor="#000000"
+        android:textColorLink="#000000"
+        android:textSize="18dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnURLAudit">
+
+    </Button>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

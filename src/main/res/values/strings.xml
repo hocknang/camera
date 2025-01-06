@@ -1,0 +1,32 @@
+<resources>
+    <string name="app_name">ScanLah</string>
+    <string name="serialNo">serialNo</string>
+    <string-array name="department">
+        <item>Select an Option</item>
+        <item>ODCS</item>
+        <item>ESE</item>
+        <item>IAC</item>
+        <item>IRD</item>
+        <item>OPPD</item>
+        <item>TADM</item>
+        <item>TAFEP</item>
+    </string-array>
+    <string name="messageWithLink"><u>View inventory transactions</u></string>
+    <string name="send_sucessful">Submitted</string>
+    <string name="Officer_error_space">Officer Name: Allow Space Only</string>
+    <string name="checkout_error_required_department">Department: You must enter a value.</string>
+    <string name="checkout_error_required_officer">Officer Name: You must enter a value.</string>
+    <string name="urlStockTakeMaster"><u>Master Inventory List</u></string>
+    <string name="urlStockTakeAudit"><u>Stock take Audit Log</u></string>
+    <string name="urlStockTakeUntracked"><u>Untracked Assets List</u></string>
+    <string name="lableForStockTakePass">Item found!</string>
+    <string name="ENABLE_OTP">TRUE</string>
+    <string name="stocktakeerror_location_required">Location: You must enter a value.</string>
+    <string name="stocktakeerror_description_required">Description: You must enter a value.</string>
+    <string name="stocktakeerror_remark_required">Remark: You must enter a value.</string>
+    <string name="stocktakeerror_fail_item_not">Item not found in master List.</string>
+    <string name="SendAllReport"><u>Send Report Link to Email</u></string>
+    <string name="Remark_error_space">Remark: Allow Space Only</string>
+    <string name="Location_error_space">Location: Allow Space Only</string>
+    <string name="Description_error_space">Description: Allow Space Only</string>
+</resources>
