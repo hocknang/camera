@@ -1,6 +1,4 @@
 import streamlit as st
-
-import streamlit as st
 import os
 
 st.set_page_config(initial_sidebar_state="collapsed", menu_items=None)
@@ -22,6 +20,6 @@ else:
     st.error("Video file not found. Please check the file path.")
 
 if st.button("Login to Scanlah"):
-    st.switch_page('pages/1_Login Page.py')
+    st.switch_page('login.py')
 
 st.sidebar.success("Select a page above")
