@@ -1,127 +1,58 @@
-# This is a sample Python script.
-
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
 import streamlit as st
+from pyzbar.pyzbar import decode
+from PIL import Image, ImageDraw
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
+st.title("Loan Inventory Barcode Scanner")
+
+# 1️⃣ Ensure session state variables exist
+if "uploader_key" not in st.session_state:
+    st.session_state.uploader_key = "uploader_loan_inventory"  # Unique key for file uploader
+if "uploaded_file" not in st.session_state:
+    st.session_state.uploaded_file = None  # Stores the uploaded file
+if "checkbox_state" not in st.session_state:
+    st.session_state.checkbox_state = False  # Default checkbox state
 
 
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    st.title("Barcode Scanner with Streamlit")
+# 2️⃣ Function to reset file uploader & UI
+def clear_upload():
+    st.session_state.uploaded_file = None  # Remove uploaded file
+    st.session_state.uploader_key = f"uploader_{st.session_state.uploader_key}_reset"  # Change uploader key
+    st.session_state.checkbox_state = False  # Reset checkbox
+    st.rerun()  # ✅ Force Streamlit to immediately refresh UI
 
-    # HTML and JavaScript code
-    html_code = """
-        <!DOCTYPE html>
-        <html>
-        <head>
-            <title>Barcode Scanner</title>
-            <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
-            <style>
-                #qr-reader {
-                width: 500px;
-                margin: 20px auto;
-            }
-            #controls {
-                display: flex;
-                justify-content: center;
-                gap: 10px;
-                margin-top: 10px;
-            }
-            #qr-reader-results {
-                text-align: center;
-                margin-top: 20px;
-                font-size: 18px;
-            }
-        </style>
-        </head>
-        <body>
-            <h1 style="text-align: center;">Barcode Scanner</h1>
-            <div id="controls">
-                <select id="camera-select"></select>
-                <button id="start-scanner" disabled>Start Scanner</button>
-            </div>
-            <div id="qr-reader"></div>
-            <div id="qr-reader-results">Scanned Code will appear here.</div>
-            <script>
-                document.addEventListener("DOMContentLoaded", () => {
-                    const cameraSelect = document.getElementById("camera-select");
-                    const startButton = document.getElementById("start-scanner");
-                    const resultContainer = document.getElementById("qr-reader-results");
-                    let html5QrCode = new Html5Qrcode("qr-reader");
-                    let isScanning = false; 
-                    
-                    // Request camera access
-                    navigator.mediaDevices.getUserMedia({ video: true })
-                        .then(() => {
-                             Html5Qrcode.getCameras().then(devices => {
-                            if (devices && devices.length) {
-                            devices.forEach(device => {
-                                const option = document.createElement("option");
-                                option.value = device.id;
-                                option.text = device.label || `Camera ${cameraSelect.length + 1}`;
-                                cameraSelect.appendChild(option);
-                            });
-                                startButton.disabled = false;
-                            } else {
-                                resultContainer.innerHTML = "No cameras found!";
-                            }
-                        }).catch(err => {
-                        console.error("Error getting cameras:", err);
-                        resultContainer.innerHTML = "Error accessing cameras.";
-                    });
-                })
-                .catch(err => {
-                    console.error("Camera permission denied:", err);
-                    alert("Please allow camera access in browser settings.");
-                });
-                    
-                    const config = { fps: 15, qrbox: { width: 250, height: 250 } };
-                    
-                    startButton.addEventListener("click", () => {
-                        const selectedCameraId = cameraSelect.value;
-                        
-                        const qrCodeSuccessCallback = (decodedText, decodedResult) => {
-                            console.log(`Code matched = ${decodedText}`, decodedResult);
-                            resultContainer.innerHTML = `Scanned Code: ${decodedText}`;
-                        };
-                        
-                        if(isScanning){
-                            isScanning = false;
-                            startButton.textContent = "Start Scanner";
-                            html5QrCode.stop().then(ignore => {
-                                // QR Code scanning is stopped.
-                            }).catch(err => {
-                                // Stop failed, handle it.
-                                console.error(`Error starting scanner: ${err}`);
-                                resultContainer.innerHTML = "Error starting scanner (Off). Please try again.";
-                            });
-                        }else{
-                            isScanning = true;
-                            startButton.textContent = "Stop Scanner";
-                            
-                            html5QrCode.start(
-                                selectedCameraId,
-                                config,
-                                qrCodeSuccessCallback
-                            ).catch(err => {
-                                console.error(`Error starting scanner: ${err}`);
-                                resultContainer.innerHTML = "Error starting scanner (On) Please try again.";
-                            });
-                        }
-                        
-                    });
-                    
-                });
-            </script>
-        </body>
-        </html>
-        """
 
-    # Embed the HTML code in the Streamlit app
-    st.components.v1.html(html_code, height=700, width=700)
+# 3️⃣ File uploader with dynamic key (to force reset)
+uploaded_file = st.file_uploader(
+    "Upload an image with a barcode",
+    type=["jpg", "png", "jpeg"],
+    accept_multiple_files=False,
+    key=st.session_state.uploader_key  # Use dynamic key to force reset
+)
 
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+# 5️⃣ Store the uploaded file in session state if a new one is selected
+if uploaded_file:
+    st.session_state.uploaded_file = uploaded_file
+
+# 6️⃣ Process and display image if uploaded
+if st.session_state.uploaded_file:
+    image = Image.open(st.session_state.uploaded_file)
+    draw = ImageDraw.Draw(image)
+    barcodes = decode(image)
+
+    if barcodes:
+        for barcode in barcodes:
+            barcode_data = barcode.data.decode("utf-8")
+            rect = barcode.rect
+            draw.rectangle(
+                [(rect.left, rect.top), (rect.left + rect.width, rect.top + rect.height)],
+                outline="red", width=5
+            )
+            st.write(f"Coordinates: Top-Left ({rect.left}, {rect.top}), Width: {rect.width}, Height: {rect.height}")
+            st.image(image, caption="Detected Barcodes", use_container_width=True)
+            st.success(f"Detected Barcode: {barcode_data}")
+            # 4️⃣ Clear button that resets everything
+            if st.button("Clear"):
+                clear_upload()  # ✅ Calls function that resets and reruns app
+
+    else:
+        st.warning("No barcodes detected.")
