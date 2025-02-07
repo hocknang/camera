@@ -1,25 +1,58 @@
 import streamlit as st
-import os
+from pyzbar.pyzbar import decode
+from PIL import Image, ImageDraw
 
-st.set_page_config(initial_sidebar_state="collapsed", menu_items=None)
+st.title("Loan Inventory Barcode Scanner")
 
-st.title("Scanlah")
+# 1️⃣ Ensure session state variables exist
+if "uploader_key" not in st.session_state:
+    st.session_state.uploader_key = "uploader_loan_inventory"  # Unique key for file uploader
+if "uploaded_file" not in st.session_state:
+    st.session_state.uploaded_file = None  # Stores the uploaded file
+if "checkbox_state" not in st.session_state:
+    st.session_state.checkbox_state = False  # Default checkbox state
 
-st.write("If you’re curious about ScanLah and want to understand how it works, be sure to watch our video!")
 
-st.write(" In this engaging and informative presentation, we take you through an in-depth look at ScanLah’s key features, how it enhances efficiency, and the many ways it can benefit you.")
+# 2️⃣ Function to reset file uploader & UI
+def clear_upload():
+    st.session_state.uploaded_file = None  # Remove uploaded file
+    st.session_state.uploader_key = f"uploader_{st.session_state.uploader_key}_reset"  # Change uploader key
+    st.session_state.checkbox_state = False  # Reset checkbox
+    st.rerun()  # ✅ Force Streamlit to immediately refresh UI
 
-st.write("Whether you’re a new user or someone looking to maximize the platform’s potential, this video provides valuable insights into how ScanLah simplifies processes, improves user experience, and delivers practical solutions.")
 
-st.write("Don’t miss this opportunity to see ScanLah in action and learn why it’s the perfect tool for your needs!")
+# 3️⃣ File uploader with dynamic key (to force reset)
+uploaded_file = st.file_uploader(
+    "Upload an image with a barcode",
+    type=["jpg", "png", "jpeg"],
+    accept_multiple_files=False,
+    key=st.session_state.uploader_key  # Use dynamic key to force reset
+)
 
-video_path = "./video/scanlah.mp4"  # Use forward slashes for cross-platform compatibility
-if os.path.exists(video_path):
-    st.video(video_path)
-else:
-    st.error("Video file not found. Please check the file path.")
+# 5️⃣ Store the uploaded file in session state if a new one is selected
+if uploaded_file:
+    st.session_state.uploaded_file = uploaded_file
 
-if st.button("Login to Scanlah"):
-    st.switch_page('login.py')
+# 6️⃣ Process and display image if uploaded
+if st.session_state.uploaded_file:
+    image = Image.open(st.session_state.uploaded_file)
+    draw = ImageDraw.Draw(image)
+    barcodes = decode(image)
 
-st.sidebar.success("Select a page above")
+    if barcodes:
+        for barcode in barcodes:
+            barcode_data = barcode.data.decode("utf-8")
+            rect = barcode.rect
+            draw.rectangle(
+                [(rect.left, rect.top), (rect.left + rect.width, rect.top + rect.height)],
+                outline="red", width=5
+            )
+            st.write(f"Coordinates: Top-Left ({rect.left}, {rect.top}), Width: {rect.width}, Height: {rect.height}")
+            st.image(image, caption="Detected Barcodes", use_container_width=True)
+            st.success(f"Detected Barcode: {barcode_data}")
+            # 4️⃣ Clear button that resets everything
+            if st.button("Clear"):
+                clear_upload()  # ✅ Calls function that resets and reruns app
+
+    else:
+        st.warning("No barcodes detected.")
